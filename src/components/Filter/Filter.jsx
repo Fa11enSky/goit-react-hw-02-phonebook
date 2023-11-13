@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import css from './filter.module.css';
 const Filter = ({ handleInput }) => {
   return (
