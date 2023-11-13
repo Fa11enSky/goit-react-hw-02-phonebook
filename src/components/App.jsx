@@ -31,7 +31,15 @@ class App extends Component {
     const { filter, contacts } = this.state;
     return (
       <div>
-        <h1 style={{ fontSize: '45px' }}>Phonebook</h1>
+        <h1
+          style={{
+            fontSize: '45px',
+            textAlign: 'center',
+            marginBottom: '20px',
+          }}
+        >
+          Phonebook
+        </h1>
         <ContactForm
           update={this.updateContacts}
           check={this.isIncludeContact}
