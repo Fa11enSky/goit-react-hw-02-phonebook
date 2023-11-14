@@ -15,15 +15,10 @@ class ContactForm extends Component {
     ev.preventDefault();
     const newContact = {
       id: nanoid(),
-      name: this.state.name,
-      number: this.state.number,
+      ...this.state,
     };
-    const { name } = newContact;
-    if (this.props.check(name)) {
-      alert(` ${name} is already in contacts`);
-      return;
-    }
     this.props.update(newContact);
+    ev.target.reset();
   };
   render() {
     return (

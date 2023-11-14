@@ -14,10 +14,14 @@ class App extends Component {
     );
   };
   updateContacts = newContact => {
-    this.setState(prevState => {
-      const contacts = [...prevState.contacts, newContact];
-      return { contacts };
-    });
+    const { name } = newContact;
+    if (this.isIncludeContact(name)) {
+      alert(` ${name} is already in contacts`);
+      return;
+    }
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, newContact],
+    }));
   };
   handleInput = ev => {
     this.setState({ [ev.target.name]: ev.target.value.toLowerCase() });
@@ -27,8 +31,19 @@ class App extends Component {
       contacts: prevState.contacts.filter(el => el.id !== id),
     }));
   };
+  createRenderListContact = () => {
+    const { contacts, filter } = this.state;
+    let toRender;
+    if (filter.length !== 0) {
+      toRender = contacts.filter(el =>
+        el.name.toLowerCase().includes(filter.toLowerCase())
+      );
+    } else {
+      toRender = contacts;
+    }
+    return toRender;
+  };
   render() {
-    const { filter, contacts } = this.state;
     return (
       <div>
         <h1
@@ -40,10 +55,7 @@ class App extends Component {
         >
           Phonebook
         </h1>
-        <ContactForm
-          update={this.updateContacts}
-          check={this.isIncludeContact}
-        />
+        <ContactForm update={this.updateContacts} />
         <h2
           style={{
             fontSize: '40px',
@@ -55,8 +67,7 @@ class App extends Component {
         </h2>
         <Filter handleInput={this.handleInput} />
         <ContactList
-          contacts={contacts}
-          filter={filter}
+          contacts={this.createRenderListContact()}
           deleteContact={this.deleteContact}
         />
       </div>
